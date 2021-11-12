@@ -1,5 +1,5 @@
 # HPV-master
-# TP6 Grupo Nº 5
+# Grupo Nº 5
 # Perez Ernesto Rafael rafaelperezctes@gmail.com Sofia Erdozain sofierdozain@gmail.com
 # Análisis de variantes en cepas del virus del papiloma humano
 
