@@ -3,10 +3,6 @@ Alto riesgo: 16, 18, 31, 33, 35, 39, 45, 51, 52, 56,  58, 59, 68, 73, 82
 Probable riesgo: 26, 53, 66
 Bajo riesgo: 6,11,40,42,43,44,54,61,70,72,81,CP6108
 Riesgo no determinado: 34,57,83
-# Lo saque de una imagen googleando clasificaciones HPV, pero seguramente no deben diferir demasiados con otros, luego daremos un link oficial de refencia
-
-1, 2, 3, 5, 4, 7, 8, 9, 10, 12, 13, 14, 15, 17, 19, 20, 21, 22, 23, 24, 25, 27, 28, 29, 30, 32, 36, 37, 38, 41,  
- 47, 48, 49, 50, 55, 60, 62, 63, 64, 65, 67, 69, 74, 75, 76, 77
         	
 Faltan:
 HPV1 (mouse: https://www.ncbi.nlm.nih.gov/bioproject/562919) otro organismo 
