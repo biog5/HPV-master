@@ -114,32 +114,6 @@ ProteinasJuntas()
 
 
 ############################# 2: Lecturas
-# Leer
-def Leer(archivo):
-    proteinas = list(bsio.parse(archivo, 'fasta'))
-    return proteinas 
-
-#archivo='BD/all_genomas.fasta'
-#proteina_file=Leer(archivo)
-
-def Recorrer(resultados):
-    c = 0   
-    for base in resultados: #resultados[0]
-        print(base)
-#Recorrer(proteina_file)
-
-
-"""
-ideas cualquiera para hacer:
-1 Hallar frecuencias de ADN y aminoacidos
-2 Los genomasn que no tienen E1-2-7 buscar sus genes similares
-3 Blast contra que ?... puedo generar una BD propia y alinear con la misma
-pero cual eligiriamos y xq 
-4 Blast online a codigo probar
-5 Identificar familias dominios
-6 Hacer algo con los pdb que se tengan
-7 Modelar todo lo que se pueda de distintos metodos y herramientas dadas y no dadas en clases
 
 
 
-"""
