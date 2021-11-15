@@ -14,7 +14,7 @@ import numpy as np
 
 ############################# 1: Descargas
 # llamo al modulo de carga de BD
-import TPEspecial
+import CargaBD
 
 unspecified_risk = ["HPV30", "HPV34", "HPV39", "HPV40", "HPV53", "HPV57", "HPV59", "HPV61", "HPV62", "HPV64", "HPV66", "HPV67", "HPV68", "HPV69"]
 low_risk = ["HPV6", "HPV11", "HPV16", "HPV18", "HPV31", "HPV33", "HPV35", "HPV42", "HPV43", "HPV44", "HPV45", "HPV51", "HPV52", "HPV74"]
