@@ -113,7 +113,7 @@ def Recorrer(resultados):
             cepa2 = "HPV"+(str(hit.description)[-4:-1]).replace(" ", "")
             for hsp in hit:
                 print(cepa2, hsp.bitscore)
-                lista_aux.append([cepa2, hsp.bitscore])
+                lista_aux.append([cepa2, int(hsp.bitscore)])
                 c+=1
     return cepa_query, lista_aux
 
@@ -165,6 +165,6 @@ def AnalisarA():
         if len(k)>0:
             matriz_aux = np.array(k)
             eje_x= matriz_aux[:,0]
-            eje_y= matriz_aux[:,1] 
+            eje_y= list(map(int, matriz_aux[:,1]))
             GraficarA(objetivo,eje_x,eje_y)
 AnalisarA()
