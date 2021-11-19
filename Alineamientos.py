@@ -147,10 +147,8 @@ Limpiar()
 
 ############################# 2.3: Análisis
 
-def GraficarA(objetivo,x,y):
+def GraficarA(objetivo,x,y,proteina, cepa):
     plt.figure(figsize = (12, 6))
-    proteina=objetivo[-2:] 
-    cepa= objetivo[:-2]
     print("Graficando y guardando analisis", " Cepa: ",cepa," Proteina: ",proteina)
     plt.bar(x,y)
     plt.xlabel("Cepas de bajo riesgo")
@@ -160,11 +158,37 @@ def GraficarA(objetivo,x,y):
     plt.title(titulo)
     plt.savefig("IMG/"+titulo2+".png")
 
-def AnalisarA():
+
+def AnalizarB(E1,E2,E7,L1,L2):
+    for i in ['E1','E2','E7','L1','L2']:
+        print("Arbol Filogentico, nivel 1, para la proteina",i)
+        for bajo,altos in eval(i).items(): 
+            print(bajo)
+            for j in altos:
+                print("|______",j)
+        print()
+    
+
+def AnalizarA():
+    E1 = {}
+    E2 = {}
+    E7 = {}
+    L1 = {}
+    L2 = {}
     for objetivo,k in comparaciones.items():       
         if len(k)>0:
             matriz_aux = np.array(k)
-            eje_x= matriz_aux[:,0]
-            eje_y= list(map(int, matriz_aux[:,1]))
-            GraficarA(objetivo,eje_x,eje_y)
-AnalisarA()
+            eje_x = matriz_aux[:,0]
+            eje_y = list(map(int, matriz_aux[:,1]))
+            proteina=str(objetivo[-2:]) 
+            cepa = str(objetivo[:-2])
+            valor = eval(proteina).get(eje_x[0])
+            if valor != None:
+                valor.append(cepa)
+            else:
+                valor = [cepa]
+            eval(proteina)[eje_x[0]] = valor
+            GraficarA(objetivo,eje_x,eje_y, proteina, cepa)
+    AnalizarB(E1,E2,E7,L1,L2)
+    
+AnalizarA()
