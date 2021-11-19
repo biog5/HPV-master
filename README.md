@@ -21,8 +21,9 @@ El sistema de análisis, incia como trabajo final de la materia Bioinformática 
   
   2.3. Análisis de resultados
   
+</pre>
   !["E1 - E2"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R1.png)
   !["E7"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R2.png)
   !["L1"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R3.png)
   !["L2"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R4.png)
-</pre>
+
