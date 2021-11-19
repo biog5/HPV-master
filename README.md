@@ -15,8 +15,12 @@ El sistema de análisis, incia como trabajo final de la materia Bioinformática 
 
 2- Alineamiento: 
 
-  2.1 Agrupamiento
+  "emsp" 2.1 Agrupamiento
   
   2.2 Se utiliza en primera instacia Blastp para alinear las proteinas de cepas de alto riesgo contra las demas cepas
   
   2.3. Análisis de resultados
+  ![](https://github.com/biog5/HPV-master/IMG/A-R1.png)
+  ![](https://github.com/biog5/HPV-master/IMG/A-R2.png)
+  ![](https://github.com/biog5/HPV-master/IMG/A-R3.png)
+  ![](https://github.com/biog5/HPV-master/IMG/A-R4.png)
