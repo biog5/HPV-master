@@ -20,7 +20,7 @@ El sistema de análisis, incia como trabajo final de la materia Bioinformática 
   2.2 Se utiliza en primera instacia Blastp para alinear las proteinas de cepas de alto riesgo contra las demas cepas
   
   2.3. Análisis de resultados
-  !["E1 - E2"](https://github.com/biog5/HPV-master/IMG/A-R1.png)
+  !["E1 - E2"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R1.png)
   !["E7"](https://github.com/biog5/HPV-master/IMG/A-R2.png)
   !["L1"](https://github.com/biog5/HPV-master/IMG/A-R3.png)
   !["L2"](https://github.com/biog5/HPV-master/IMG/A-R4.png)
