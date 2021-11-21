@@ -192,7 +192,7 @@ def AnalizarA():
             else:
                 valor = [cepa]
             eval(proteina)[eje_x[0]] = valor
-            #GraficarA(objetivo,eje_x,eje_y, proteina, cepa)
+            GraficarA(objetivo,eje_x,eje_y, proteina, cepa)
     AnalizarB(E1,E2,E7,L1,L2)
     
 AnalizarA()

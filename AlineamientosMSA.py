@@ -34,7 +34,7 @@ no_determinado riesgo E7
 no_determinado riesgo L1
 no_determinado riesgo L2
 
-Obtengo_arboles por cada uno usando lubreria phytree
+Obtengo_arboles por cada uno usando lubreria Phylo 
 
 """
 archivo = 'BD/high_riskE1.fasta '

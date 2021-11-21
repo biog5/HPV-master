@@ -27,5 +27,5 @@ import Alineamientos
 
 ############################# 2: Alineamientos MSA
 print("Alineamientos")
-# Modulo Alineamientos usando clustalOmega y libreria de creacion de arboles
+# Modulo Alineamientos usando clustalOmega y libreria de creacion de arboles filogeneticos
 import AlineamientosMSA
