@@ -24,3 +24,8 @@ import CargaBD
 print("Alineamientos")
 # Modulo Alineamientos usando blast
 import Alineamientos
+
+############################# 2: Alineamientos MSA
+print("Alineamientos")
+# Modulo Alineamientos usando clustalOmega y libreria de creacion de arboles
+import AlineamientosMSA

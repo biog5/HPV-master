@@ -31,6 +31,8 @@ high_risk = ["HPV16", "HPV18", "HPV31", "HPV33", "HPV35", "HPV39", "HPV45", "HPV
 # 2.3-Analisis
 
 archivos_temp=[]
+archivos_agrupados=[]
+archivos_MSA=[]
 ############################# 2.1: Agrupacion
 # Leer
 genes = ["E1","E2","E7","L1","L2"]
@@ -53,7 +55,7 @@ def AgruparRiesgos():
             if archivo != None:
                 archivo_salida = open(salida_nombre, "a+")                
                 LeerYGrabar(archivo, archivo_salida)
-                archivos_temp.append(salida_nombre)
+                archivos_agrupados.append(salida_nombre)
                 archivo_salida.close() 
     
     # Segundo grabo las protenias ojetivo de bajo riesgo
@@ -64,7 +66,7 @@ def AgruparRiesgos():
             if archivo != None: 
                 archivo_salida = open(salida_nombre, "a+")
                 LeerYGrabar(archivo, archivo_salida)
-                archivos_temp.append(salida_nombre)
+                archivos_agrupados.append(salida_nombre)
                 archivo_salida.close()  
     
     # Tercero grabo las protenias ojetivo de no especificado riesgo
@@ -75,7 +77,7 @@ def AgruparRiesgos():
             if archivo != None:                
                 archivo_salida = open(salida_nombre, "a+")
                 LeerYGrabar(archivo, archivo_salida)
-                archivos_temp.append(salida_nombre)
+                archivos_agrupados.append(salida_nombre)
                 archivo_salida.close()  
 
 #Revisar que los archivos no se esten regrabando xq darian error
@@ -135,14 +137,15 @@ def AlinearRiesgos():
             
 AlinearRiesgos()       
 
-def Limpiar():
+def Limpiar(archivos):
     from os import remove
     from os import path
-    for i in archivos_temp:
+    for i in archivos:
         if path.exists(i):
             print("Eliminando: ",i)
             remove(i)           
-Limpiar()
+Limpiar(archivos_temp)
+#Limpiar(archivos_agrupados) # Lo dejo xq lo necesita MSA
 
 
 ############################# 2.3: Análisis
@@ -162,6 +165,7 @@ def GraficarA(objetivo,x,y,proteina, cepa):
 def AnalizarB(E1,E2,E7,L1,L2):
     for i in ['E1','E2','E7','L1','L2']:
         print("Arbol Filogentico, nivel 1, para la proteina",i)
+        print("Cepa Bajo Riesgo ______ Cepa Alto Riesgo")
         for bajo,altos in eval(i).items(): 
             print(bajo)
             for j in altos:
@@ -188,7 +192,7 @@ def AnalizarA():
             else:
                 valor = [cepa]
             eval(proteina)[eje_x[0]] = valor
-            GraficarA(objetivo,eje_x,eje_y, proteina, cepa)
+            #GraficarA(objetivo,eje_x,eje_y, proteina, cepa)
     AnalizarB(E1,E2,E7,L1,L2)
     
 AnalizarA()

@@ -27,3 +27,6 @@ El sistema de análisis, incia como trabajo final de la materia Bioinformática 
   !["L1"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R3.png)
   !["L2"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R4.png)
 
+3- AlineamientoMSA: Se utilza clustalOmega y librerias de arboles filogenticos
+
+  !["L2"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R5.png)
