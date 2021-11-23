@@ -30,3 +30,7 @@ El sistema de análisis, incia como trabajo final de la materia Bioinformática 
 3- AlineamientoMSA: Se utilza clustalOmega y librerias de arboles filogenticos
 
   !["L2"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R5.png)
+
+4- Modelado HMM: Se utilza MAFFT para aliniamiento multiple y HMMER para modelos HMM
+
+  !["L2"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R7.png)

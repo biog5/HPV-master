@@ -25,7 +25,12 @@ print("Alineamientos")
 # Modulo Alineamientos usando blast
 import Alineamientos
 
-############################# 2: Alineamientos MSA
+############################# 3: Alineamientos MSA
 print("Alineamientos")
 # Modulo Alineamientos usando clustalOmega y libreria de creacion de arboles filogeneticos
 import AlineamientosMSA
+
+############################# 4: Modelos HMM
+print("Modelos HMM")
+# Modulo Alineamientos usando clustalOmega y libreria de creacion de arboles filogeneticos
+import ModelosHMM
