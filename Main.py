@@ -7,30 +7,45 @@
 
 #@author: Grupo Nº 5
 
+import sys
 
-import Bio.SeqIO as bsio
-import matplotlib.pyplot as plt
-import numpy as np
+def Menu():
+    print("#####################################")
+    print("###### Bienvenidos a BIOG5 ######")
+    print("#####################################")
+    print()
+    print("Que desea realizar:")
+    print("1- Alineamientos de a pares usando Blast")
+    print("2- Alineamientos multiples usando Clustal Omega")
+    print("3- Modelos HMM")
+    print("4- Analisis de variantes en proteinas")
+    print("5- Analisis de variantes en genomas")
+    print("6- Salir")
+    opcion_principal = int(input("Ingrese una opción: "))
+    
+    if opcion_principal  == 1:
+        import Alineamientos
+        Alineamientos.Menu()
 
+    if opcion_principal  == 2:
+        import AlineamientosMSA
+        AlineamientosMSA.Menu()
+        
+    if opcion_principal  == 3:
+        import ModelosHMM
+        ModelosHMM.Menu()
+    
+    if opcion_principal  == 4:
+        import VariantesProteinas
+        VariantesProteinas.Menu()
+        
+    if opcion_principal  == 5:
+        import VariantesGenomas
+        VariantesGenomas.Menu()
+        
+    if opcion_principal  == 6:
+        print("Gracias por utilizar BIOG5")
+        sys.exit()
 
-print("Modulo princial")
-
-############################# 1: Descargas
-# Modulo de carga de BD
-print("Carga de BD")
-import CargaBD
-
-############################# 2: Alineamientos
-print("Alineamientos")
-# Modulo Alineamientos usando blast
-import Alineamientos
-
-############################# 3: Alineamientos MSA
-print("Alineamientos")
-# Modulo Alineamientos usando clustalOmega y libreria de creacion de arboles filogeneticos
-import AlineamientosMSA
-
-############################# 4: Modelos HMM
-print("Modelos HMM")
-# Modulo Alineamientos usando clustalOmega y libreria de creacion de arboles filogeneticos
-import ModelosHMM
+if __name__ == '__main__':
+    Menu()
