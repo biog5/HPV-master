@@ -1,8 +1,8 @@
 # HPV-master
 # Grupo Nº. 5
 
-# Erdozain Sofia sofierdozain@gmail.com
-# Perez Ernesto Rafael rafaelperezctes@gmail.com 
+# Ernesto Rafael, Perez rafaelperezctes@gmail.com 
+# Sofia, Erdozain sofierdozain@gmail.com
 
 Colaboradores: Aldana Claps aldanaclaps@gmail.com Ana Luz Garcia garcianaluz@gmail.com
 # Análisis de proteinas y genomas de cepas del virus del papiloma humano
