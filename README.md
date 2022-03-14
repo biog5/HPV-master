@@ -12,6 +12,7 @@ El sistema de análisis, incia como trabajo final de la materia Bioinformática 
 # Desarrollo etapas:
 
 1- Main 
+
 !["E0"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R0.png)
 
 2- Alineamiento: 
@@ -25,12 +26,19 @@ El sistema de análisis, incia como trabajo final de la materia Bioinformática 
 </pre>
 Menu
 !["E1-1"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R1-1.png)
+
 Lista de proteinas
+
 !["E1-2"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R1-2.png)
+
 Lista de genomas
+
 !["E1-3"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R1-3.png)
+
 Salida ejemplo
+
 !["E1-4"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R1-4.png)
+
 3- AlineamientoMSA: Se utilza clustalOmega y librerias de arboles filogenticos
 
 !["E2"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R2.png)
@@ -42,7 +50,9 @@ Salida ejemplo
 5- Variantes en proteinas
 
 !["E4-1"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R4-1.png)
+
 !["E4-2"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R4-2.png)
+
 !["E4-3"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R4-3.png)
 
 6- Variantes en genomas
