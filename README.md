@@ -11,10 +11,11 @@ El sistema de análisis, incia como trabajo final de la materia Bioinformática 
 
 # Desarrollo etapas:
 
-1- Modulo descarga de Base de Datos: Se obtienen todos los datos posibles en foramto .fasta, de BD publicas, sobre genomas y proteinas de interes.
-<pre>
-2- Alineamiento: 
+1- Main 
+!["E0"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R0.png)
 
+2- Alineamiento: 
+<pre>
   2.1 Agrupamiento
   
   2.2 Se utiliza en primera instacia Blastp para alinear las proteinas de cepas de alto riesgo contra las demas cepas
@@ -22,15 +23,28 @@ El sistema de análisis, incia como trabajo final de la materia Bioinformática 
   2.3. Análisis de resultados
   
 </pre>
-  !["E1 - E2"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R1.png)
-  !["E7"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R2.png)
-  !["L1"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R3.png)
-  !["L2"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R4.png)
-
+Menu
+!["E1-1"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R1-1.png)
+Lista de proteinas
+!["E1-2"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R1-2.png)
+Lista de genomas
+!["E1-3"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R1-3.png)
+Salida ejemplo
+!["E1-4"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R1-4.png)
 3- AlineamientoMSA: Se utilza clustalOmega y librerias de arboles filogenticos
 
-  !["L2"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R5.png)
+!["E2"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R2.png)
 
 4- Modelado HMM: Se utilza MAFFT para aliniamiento multiple y HMMER para modelos HMM
 
-  !["L2"](https://github.com/biog5/HPV-master/blob/main/IMG/A-R7.png)
+!["E3"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R3.png)
+
+5- Variantes en proteinas
+
+!["E4-1"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R4-1.png)
+!["E4-2"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R4-2.png)
+!["E4-3"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R4-3.png)
+
+6- Variantes en genomas
+
+!["E3"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R5.png)
