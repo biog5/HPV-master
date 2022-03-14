@@ -1,13 +1,13 @@
 # HPV-master
-# Grupo NÂº 5
+# Grupo Nº. 5
 
 # Erdozain Sofia sofierdozain@gmail.com
 # Perez Ernesto Rafael rafaelperezctes@gmail.com 
 
 Colaboradores: Aldana Claps aldanaclaps@gmail.com Ana Luz Garcia garcianaluz@gmail.com
-# AnÃ¡lisis de variantes en cepas del virus del papiloma humano
+# Análisis de proteinas y genomas de cepas del virus del papiloma humano
 
-El sistema de anÃ¡lisis, incia como trabajo final de la materia BioinformÃ¡tica Avanzada de la UBA. Estamos en la primera etapa del desarrollo, pero se planifica a futuro incluir, mÃºltiples mÃ³dulos, integrantes de diversas ramas de las ciencias en participaciÃ³n comunitaria para el desarrollo de un suite de herramientas que esperamos sirvan de ayuda para la InvestigaciÃ³n y Desarrollo de tratamientos en patologÃ­as generaras por el virus del papiloma humano.
+El sistema Biog5 para análisis, incia como trabajo final de la materia Bioinformática Avanzada de la UBA. Estamos en la primera etapa del desarrollo, pero se planifica a futuro incluir, múltiples módulos, integrantes de diversas ramas de las ciencias en participación comunitaria para el desarrollo de un suite de herramientas que esperamos sirvan de ayuda para la Investigación y Desarrollo de tratamientos en patologías generaras por el virus del papiloma humano.
 
 # Desarrollo etapas:
 
@@ -21,7 +21,7 @@ El sistema de anÃ¡lisis, incia como trabajo final de la materia BioinformÃ¡tica 
   
   2.2 Se utiliza en primera instacia Blastp para alinear las proteinas de cepas de alto riesgo contra las demas cepas
   
-  2.3. AnÃ¡lisis de resultados
+  2.3. Análisis de resultados
   
 </pre>
 Menu
