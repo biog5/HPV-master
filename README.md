@@ -50,9 +50,15 @@ Salida ejemplo
 
 5- Variantes en proteinas
 
+Sub menu
+ 
 !["E4-1"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R4-1.png)
 
+Impresión inline
+
 !["E4-2"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R4-2.png)
+
+Impresión gráfica
 
 !["E4-3"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R4-3.png)
 
