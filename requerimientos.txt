@@ -1,0 +1,27 @@
+1: Debemos instalar BLAST
+Intalar Blast Windows:
+guia: https://www.ncbi.nlm.nih.gov/books/NBK52637/
+release: https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.10.0/
+configurar la variable de entorno:BLASTDB_LMDB_MAP_SIZE=1000000
+Guia: https://www.java.com/es/download/help/path_es.html
+
+
+Ejemplo parametros
+-perc_identity 75 #identidad
+-qcov_hsp_perc 55 #cobertura querry 
+-outfmt "7  #formato
+
+# install necessary packages: 
+OS: Linux
+Anaconda: https://www.anaconda.com/products/individual
+
+conda install biopython
+conda install scipy numpy pandas matplotlib
+Or
+pip2 install scipy numpy pandas matplotlib
+
+---Extras
+como "get_surface", debí instalar el antes:
+# conda install msms
+y para la estructura secundaria instale antes:
+# conda install -c salilab dssp
