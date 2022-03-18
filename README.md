@@ -40,9 +40,16 @@ Salida ejemplo
 
 !["E1-4"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R1-4.png)
 
-3- AlineamientoMSA: Se utilza clustalOmega y librerias de arboles filogenticos
+3- Alineamiento MSA: Se utilza clustalOmega y librerias de
 
-!["E2"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R2.png)
+Interfaz 
+
+!["E2-1"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R2-1.png)
+
+
+arboles filogenticos
+
+!["E2-2"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R2-2.png)
 
 4- Modelado HMM: Se utilza MAFFT para aliniamiento multiple y HMMER para modelos HMM
 
