@@ -20,7 +20,9 @@ def Menu():
     print("3- Modelos HMM")
     print("4- Analisis de variantes en proteinas")
     print("5- Analisis de variantes en genomas")
-    print("6- Salir")
+    print("6- Estructuras NCBI")
+    print("7- Configuar Riesgos")
+    print("8- Salir")
     opcion_principal = int(input("Ingrese una opción: "))
     
     if opcion_principal  == 1:
@@ -42,8 +44,16 @@ def Menu():
     if opcion_principal  == 5:
         import VariantesGenomas
         VariantesGenomas.Menu()
-        
+
     if opcion_principal  == 6:
+        import EstructurasNCBI
+        EstructurasNCBI.Menu()
+
+    if opcion_principal  == 7:
+        import ConfigurarRiesgos
+        ConfigurarRiesgos.Menu()
+
+    if opcion_principal  == 8:
         print("Gracias por utilizar BIOG5")
         sys.exit()
 

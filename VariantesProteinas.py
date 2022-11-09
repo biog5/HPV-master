@@ -157,16 +157,15 @@ def CargaPorcentajes():
     return alineamientos_porcentajes
 
 
-def CargarConservados():
+def CargarConservados(porcentaje=90):
     x = []
     y = []
     x_labels = []
     conservados = {}
     print("5: Filtrando porcentajes con >90% de conservación, espere por favor ...")
-
     for p, porcentajesP in alineamientos_porcentajes.items():
         for i, valor in porcentajesP.items():
-            if valor[1][0] > 90:
+            if valor[1][0] > porcentaje:
                 x.append(i)
                 y.append(valor[1][0])
                 x_labels.append(valor[0][0])
@@ -199,12 +198,12 @@ def Imprimir():
     # Imprimir()
 
 
-def GraficarBarras():
+def GraficarBarras(porcentaje):
     riesgo, proteina, matrix, clave_conservados = ListarProteinas()
-    Utils.GraficarBarrasV1(clave_conservados, matrix, riesgo, proteina)
+    Utils.GraficarBarrasV1(clave_conservados, matrix, riesgo, proteina, porcentaje)
 
 
-def SubMenu1():
+def SubMenu1(porcentaje=90):
     print("### Modulo: Alineamiento multiples ###")
     print()
     print("Que desea realizar:")
@@ -219,7 +218,7 @@ def SubMenu1():
         Imprimir()
         SubMenu1()
     if opcion_principal == 2:
-        GraficarBarras()
+        GraficarBarras(porcentaje)
         SubMenu1()
     if opcion_principal == 3:
         Menu()
@@ -234,6 +233,8 @@ def SubMenu1():
 # Menu()
 
 def Main():
+    print("Se procede a buscar variantes en proteinas")
+    porcentaje = int(input("Ingrese el porcentaje minimo de conservación de una posición: "))
     global clasificacionRiesgos
     clasificacionRiesgos = {}
     ListarArchivos()
@@ -251,10 +252,10 @@ def Main():
     global alineamientos_porcentajes
     global conservados
     alineamientos_porcentajes = CargaPorcentajes()
-    conservados = CargarConservados()
+    conservados = CargarConservados(porcentaje)
     print("Calculos terminados analizar resultados: ")
     print()
-    SubMenu1()
+    SubMenu1(porcentaje)
 
 
 # Main()

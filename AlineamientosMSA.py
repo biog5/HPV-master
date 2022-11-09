@@ -13,14 +13,24 @@ import CargaBD
 import Main as principal
 import Utils
 import sys
+import Bio.SeqIO as bsio
+
 archivos_MSA = []
 archivos_agrupados = []
+archivos_agrupados_gen = []
 
 def ObtenerAgrupaciones():
     global archivos_agrupados
     Alineamientos.Limpiar(CargaBD.archivos_agrupados)
+    Alineamientos.Limpiar(CargaBD.archivos_agrupados_gen)
+    #global control_grabados
+    Alineamientos.bandera_agrupada = 0
+    Alineamientos.control_grabados=[]
     Alineamientos.AgruparRiesgos()  # genera fasta que son limpiados antes
     archivos_agrupados = Alineamientos.archivos_agrupados
+    archivos_agrupados = Alineamientos.archivos_agrupados_gen
+
+    
 
 
 ############################# 3: Alineamientos MSA
@@ -49,9 +59,28 @@ Obtengo_arboles por cada uno usando lubreria phytree
 
 import subprocess
 from subprocess import PIPE
+dicc_id_cepa={}
 
+def RelacionarIdCepa():
+    global dicc_id_cepa
+    for archivo in archivos_agrupados:
+        proteinas = list(bsio.parse(archivo, 'fasta'))
+        for i in proteinas:
+            len_id=len(i.name)
+            id=i.name
+            descripcion = i.description[len_id:]
+            cepa_query = str(descripcion)[-4:-1].replace(" ", "")
+            if not (cepa_query[0].isdigit()):
+                cepa_query = cepa_query[1]
+            cepa_query = "HPV" + str(cepa_query).upper()
+            if cepa_query == "HPV7":
+                cepa_query = "HPV18"
+            dicc_id_cepa[id]=cepa_query
 
 def CorrerClustalOmega():
+    global archivos_agrupados
+    global archivos_agrupados_gen
+    archivos_agrupados = archivos_agrupados + archivos_agrupados_gen
     for archivo in archivos_agrupados:
         archivo_entrada = archivo
         archivo_salida = archivo.replace(".fasta", "_MSA.phylip")
@@ -89,57 +118,102 @@ for clave, valor in CargaBD.proteinas.items():
     proteinas2[valor] = clave
 
 
-def ContruirArboles():
+def ContruirArboles(elecion=0):
     global tree1
     datos_generados = []
     print("3: Se generaran arboles filogeneticos con los alineamientos grupales, espere por favor ...")
-
-    for archivo in archivos_MSA:
-        # print("Creando arbol para:",archivo)
-        archivo_salida = archivo.replace(".phylip", ".jpg")
-        titulo = "Grupo: " + str(archivo[3:-13]).replace("_", " ") + " - Proteina: " + str(archivo[-13:-11])
-        datos = titulo + " - salida: " + str(archivo_salida)
-        datos_generados.append(datos)
-        # construyo arbol Filogenetico
-        # construyo arbol Filogenetico
-        # paso 1 leo arcchivos
-        aln = AlignIO.read(archivo, 'phylip')
-        # print(aln)
-        # calculo de distancia con matriz default(dna_models, protein_models, models)
-        calculator = DistanceCalculator('identity')
-        dm = calculator.get_distance(aln)
-        # print(dm)
-        # No se bien
-        constructor = DistanceTreeConstructor(calculator, 'nj')
-        tree = constructor.build_tree(aln)
-        tree = constructor.upgma(dm)
-        tree.ladderize()  # Imprime imagen
-        # fig = plt.figure(figsize=(10, 20), dpi=100)
-        # axes = fig.add_subplot(1, 1, 1)
-        # Phylo.draw(tree, axes=axes, label_func=get_label)
-        # fig=Phylo.draw(tree, label_func=lambda x: None, show_confidence=False, do_show=False)
-        fig = Phylo.draw(tree, do_show=False, branch_labels=proteinas2)
-        plt.title(titulo)
-        plt.ylabel("Proteinas")
-        plt.xlabel("Distancias")
-        plt.savefig(archivo_salida)
-        plt.show()
-        # print(tree.clade.clades)
-        # for i in (tree.clade.clades):
-        # print(i.clades)
-        # for j in (i.clades):
-        # print(j.name)
-        # print()
-        # print(tree.find_clades)
-        # print(tree.clade.find_any)
-        # print(tree.clade.find_clades)
-        # print(tree.clade.find_elements)
-        # print(dir(tree.clade))
-        # Phylo.draw_ascii(tree) # Imprime por consola arbol
+    archivo=archivos_MSA[elecion]
+    #for archivo in archivos_MSA:
+    # print("Creando arbol para:",archivo)
+    archivo_salida = archivo.replace(".phylip", ".jpg")
+    titulo = "Grupo: " + str(archivo[3:-13]).replace("_", " ") + " - Proteina: " + str(archivo[-13:-11])
+    datos = titulo + " - salida: " + str(archivo_salida)
+    datos_generados.append(datos)
+    # construyo arbol Filogenetico
+    # paso 1 leo arcchivos
+    aln = AlignIO.read(archivo, 'phylip')
+    # print(aln)
+    # calculo de distancia con matriz default(dna_models, protein_models, models)
+    calculator = DistanceCalculator('identity')
+    dm = calculator.get_distance(aln)
+    # print(dm)
+    # No se bien
+    for count, value in enumerate(dm.names):
+        if dicc_id_cepa.get(value):
+            dm.names[count] = dicc_id_cepa[value]#[:-1]
+        else:
+            claves=dicc_id_cepa.keys()
+            clave_sub= [x for x in claves if value in x]
+            dm.names[count] = dicc_id_cepa[clave_sub[0]]#[:-1]
+    constructor = DistanceTreeConstructor(calculator, 'nj')
+    tree = constructor.build_tree(aln)
+    tree = constructor.upgma(dm)
+    tree.ladderize()  # Imprime imagen
+    # fig = plt.figure(figsize=(10, 20), dpi=100)
+    # axes = fig.add_subplot(1, 1, 1)
+    # Phylo.draw(tree, axes=axes, label_func=get_label)
+    # fig=Phylo.draw(tree, label_func=lambda x: None, show_confidence=False, do_show=False)
+    #fig = Phylo.draw(tree, do_show=True, branch_labels=proteinas2, show_confidence=True)
+    fig = Phylo.draw(tree, do_show=False)
+    plt.title(titulo)
+    plt.ylabel("Cepas HPV")
+    plt.xlabel("Distancias")
+    plt.savefig(archivo_salida)
+    plt.show()
+    # print(tree.clade.clades)
+    # for i in (tree.clade.clades):
+    # print(i.clades)
+    # for j in (i.clades):
+    # print(j.name)
+    # print()
+    # print(tree.find_clades)
+    # print(tree.clade.find_any)
+    # print(tree.clade.find_clades)
+    # print(tree.clade.find_elements)
+    # print(dir(tree.clade))
+    # Phylo.draw_ascii(tree) # Imprime por consola arbol
     print("Calculos terminados se han generado arboles filogenticos para:")
     for dato in datos_generados:
         print(dato)
 
+
+def SubMenu1():
+    print()
+    print("### Analisis de resultados ###")
+    print()
+    print("Que desea realizar:")
+    print("1- Graficar Proteina E1")
+    print("2- Graficar Proteina E2")
+    print("3- Graficar Proteina E7")
+    print("4- Graficar Proteina L1")
+    print("5- Graficar Proteina L2")
+    print("6- Volver al menu anterior")
+    print("7- Volver al menu principal")
+    print("8- Salir")
+    CargaBD.LeerInicio()
+    opcion_principal = int(input("Ingrese una opción: "))
+    if opcion_principal == 1:
+        ContruirArboles(opcion_principal-1)
+        SubMenu1()
+    if opcion_principal == 2:
+        ContruirArboles(opcion_principal-1)
+        SubMenu1()
+    if opcion_principal == 3:
+        ContruirArboles(opcion_principal-1)
+        SubMenu1()
+    if opcion_principal == 4:
+        ContruirArboles(opcion_principal-1)
+        SubMenu1()
+    if opcion_principal == 5:
+        ContruirArboles(opcion_principal-1)
+        SubMenu1()
+    if opcion_principal == 6:
+        Menu()
+    if opcion_principal == 7:
+        principal.Menu()
+    if opcion_principal == 8:
+        print("Gracias por utilizar BIOG5")
+        sys.exit()
 
 def Main():
     print("1: Obteniendo datos y agrupandolos por riesgo, espere por favor ...")
@@ -147,8 +221,11 @@ def Main():
     print("2: Se alineran genes-proteinas en grupos de riesgo, espere por favor ...")
     CorrerClustalOmega()
     LeerMSA()
-    ContruirArboles()
+    RelacionarIdCepa()
+    SubMenu1()
+    #ContruirArboles()
     Alineamientos.Limpiar(archivos_agrupados)  # ver si borrar xq requiere re alinear todo
+    Alineamientos.Limpiar(archivos_agrupados_gen)
     Menu()
 # Main()
 

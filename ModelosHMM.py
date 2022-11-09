@@ -99,53 +99,61 @@ def Recorrer(resultados):
             c += 1
     return lista_aux
 
-
 def Comparar():
     for archivo in archivos_resultados:
         resultados = Leer(archivo)
         lista = Recorrer(resultados)
         clave = archivo.replace("_", " ").replace(".out", "").replace("risk", "")
-        leyenda = "Clasificacion: " + clave[:4] + " Proteina:" + clave[4:7] + clave[7:11] + "Clasificacion: " + clave[
-                                                                                                                11:-3] + " Proteina: " + clave[
-                                                                                                                                         -3:]
+        leyenda = "Clasificacion: " + clave[:4] + " Proteina:" + clave[4:7] + clave[7:11] + "Clasificacion: " + clave[                                                                                                               11:-3] + " Proteina: " + clave[                                                                                                                                       -3:]
         print(leyenda)
         comparacionesHMM[clave] = lista
     print()
 
-
+resultados_hmm={}
 def AnalizarA():
+    global resultados_hmm
     print("2: Relaciones evolutivas con mejores scores encontradas por cada modelo:")
     for objetivo, k in comparacionesHMM.items():
         if len(k) > 0:
             matriz_aux = np.array(k)
             eje_x = matriz_aux[:, 0]
             eje_y = list(map(int, matriz_aux[:, 1]))
-            print("Modelo HMM de Alto Riesgo proteina ", objetivo[5:8])
-            print("|______ Mejor score - ", "Cepa:", eje_x[0], "Riesgo:", objetivo[11:-3], "Proteina:", objetivo[-3:])
-            print()
+            leyenda="Modelo HMM de Alto Riesgo proteina " + str(objetivo[5:8])
+            riesgo_a_comaparar=str(objetivo[11:-3])
+            proteina = objetivo[-3:]
+            leyenda2= "Modelo HMM de Alto Riesgo proteina " + str(objetivo[5:8]) + " vs cepas " + riesgo_a_comaparar +" Riesgo"
+            print(leyenda)
+            resultados_hmm[leyenda2]=[matriz_aux,eje_x,eje_y,proteina,riesgo_a_comaparar]
+            for count, value in enumerate(eje_x):
+                bitscore = eje_y[count]
+                print("|______ Mejor score - ", "Cepa:", value," bitscore:", bitscore, "Riesgo:", riesgo_a_comaparar, "Proteina:", proteina)
 
-# Mutaciones
 
 # Paso 1 obtener las secuencias alineadas en grupos por proteinas E1-alto riesgo
-import pandas as pd
-from Bio import AlignIO
-
-align = AlignIO.read("BD/HMM/high_riskE1_seed_msa.fasta", 'fasta')
-
-# Paso 2 pasarlo a tablas
-align_pd = pd.DataFrame(align)
-filas = align_pd.shape[0]
-
-# Paso 3 calculo de porcentajes
-porcentajes = {}
-for columna in align_pd:
-    # obtengo todos los elementos de una columna
-    lista_elementos = align_pd[columna].value_counts().index
-    # print(lista_elementos)
-    cant_hist = align_pd[columna].value_counts()
-    valores = [list(cant_hist.index), list((cant_hist.values * 100) / cant_hist.sum())]
-    porcentajes[columna] = valores
-
+def ListarProteinas():
+    global resultados_hmm
+    print()
+    continuar=1
+    while continuar == 1:
+        c = 1
+        vec_aux = []
+        print("Lista Compraciones: ")
+        for p, valor in resultados_hmm.items():
+            print("Numero ",c,":",p)
+            vec_aux.append(p)
+            c+=1
+        opcion = int(input("Elija el número de compracion para graficar (0 para volver al menu anterior): " ))
+        if opcion !=0 :
+            clave = vec_aux[opcion-1]
+            valor = resultados_hmm[clave]
+            matriz=valor[0]
+            eje_x=valor[1]
+            eje_y=valor[2]
+            proteina=valor[3]
+            riesgo_a_comaparar=valor[4]
+            Utils.GraficarBarrasPares2(proteina, matriz, eje_x , eje_y, riesgo_a_comaparar)
+        else:
+            continuar=0
 
 def Main():
     print("### Recuerde que debe tener los resultados del pipeline big5 en la carpeta /BD/HMM/ ###")
@@ -153,12 +161,13 @@ def Main():
     print("1: Se compararan: Proteinas de cepas de alto riesgo vs proteinas de otros riesgos, espere por favor ...")
     Comparar()
     AnalizarA()
+    ListarProteinas()
     Menu()
 # Main()
 
 def Menu():
     print()
-    print("### Modulo: Alineamiento multiples ###")
+    print("### Modulo: Modelos HMM ###")
     print()
     print("Que desea realizar:")
     print("1- Listar Proteinas almacenadas")
@@ -182,3 +191,25 @@ def Menu():
         print("Gracias por utilizar BIOG5")
         sys.exit()
 # Menu()
+
+# Mutaciones
+"""
+import pandas as pd
+from Bio import AlignIO
+
+align = AlignIO.read("BD/HMM/high_riskE1_seed_msa.fasta", 'fasta')
+
+# Paso 2 pasarlo a tablas
+align_pd = pd.DataFrame(align)
+filas = align_pd.shape[0]
+
+# Paso 3 calculo de porcentajes
+porcentajes = {}
+for columna in align_pd:
+    # obtengo todos los elementos de una columna
+    lista_elementos = align_pd[columna].value_counts().index
+    # print(lista_elementos)
+    cant_hist = align_pd[columna].value_counts()
+    valores = [list(cant_hist.index), list((cant_hist.values * 100) / cant_hist.sum())]
+    porcentajes[columna] = valores
+"""

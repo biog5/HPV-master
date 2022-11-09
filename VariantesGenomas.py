@@ -15,6 +15,7 @@ import Utils
 import CargaBD
 import Main as principal
 import sys
+
 # Paso 1 obtener los genomas
 CargaBD.LeerInicio()
 unspecified_risk = CargaBD.unspecified
@@ -70,9 +71,31 @@ def Algoritmo1():
     genoma2 = claves[genoma2]
     print()
     print("Se alineran los genomas:", genoma1, "vs genoma: ", genoma2)
-    matriz, align_pares = AlinearGenomasAPares(genoma1, genoma2)
-    print("Graficando espere por favor ...")
-    Utils.GraficarMatriz(matriz, genoma1, genoma2)
+    # aqui aling_pd error en el varios viene del la lectura de un archivo aqui corre
+    global archivos_agrupados, genomas, archivos_genomas
+    print("3: Corriendo Clustal Omega, espere por favor ...")
+    # CorrerClustalOmega()
+    matriz, align_pd = AlinearGenomasAPares(genoma1, genoma2)
+    # matriz(posicion_conservada, aminoacido)
+    matriz_ab = align_pd.to_numpy()
+    matriz_a = np.array([np.arange(len(matriz_ab[0])), matriz_ab[0]])
+    matriz_b = np.array([np.arange(len(matriz_ab[0])), matriz_ab[1]])
+    # matriz(aminoacido, aminoacido) index=posicion
+    SubMenuGraficasPares(matriz, matriz_a, matriz_b)
+
+def AgrupacionIngresados():
+    Utils.ListarGenomas()
+    salida =""
+    lista=[]
+    claves = list(CargaBD.genomas.keys())
+    while salida != "salir":
+       salida=input("Ingrese el numero del genoma (para terminar escriba: salir) ")
+       if salida != "salir":
+             salida= int(salida)-1
+             nombre = claves[salida]
+             archivo = 'BD/' + nombre + '.fasta'
+             lista.append(archivo)
+    return lista
 # Algoritmo1()
 
 ########################## Algoritmo 2: Multiples genomas
@@ -81,6 +104,7 @@ from Bio import AlignIO
 import subprocess
 from subprocess import PIPE
 import CargaBD
+
 
 def ListarArchivos():
     aux_high = []
@@ -101,6 +125,17 @@ def ListarArchivos():
     archivos_genomas["low"] = aux_low
     archivos_genomas["unspecified"] = aux_unspecified
 
+def AgruparArchivosIngresados(lista):
+    global archivos_agrupados
+    for archivo_entrada in lista:
+        if Utils.Existe(archivo_entrada):
+            genoma = bsio.read(archivo_entrada, 'fasta')
+            archivo_salida = 'BD/' + str("genomas_selecionados") + '.fasta'
+            output_file = open(archivo_salida, "a")
+            output_file.write(genoma.format('fasta'))
+            output_file.close()
+    archivos_agrupados.append(archivo_salida)
+    print()
 
 def AgruparArchivos():
     global archivos_agrupados
@@ -113,6 +148,7 @@ def AgruparArchivos():
                 output_file.write(genoma.format('fasta'))
                 output_file.close()
         archivos_agrupados.append(archivo_salida)
+    print()
 
 
 # esto es pesadisimo si uso genomas   
@@ -131,9 +167,16 @@ def CorrerClustalOmega():
         result = subprocess.run(clustal, stdout=PIPE)
         archivos_MSA.append(archivo_salida)
 
+
 def LeerMSA():
-    global archivos_MSA
-    archivos_MSA = ['BD/high_riskE1_MSA.phylip']  # pruebo con uno
+    """
+    pruebo con un resultado ya guardado MSA pero para todos,
+    recordar descomentar en Algoritmo 2 la linea de Clustal y dejar correr
+    y comenentar las dos lineas siguientes
+    """
+    #global archivos_MSA
+    #archivos_MSA = ['BD/high_riskE1_MSA.phylip']
+
     for archivo in archivos_MSA:
         align = list(AlignIO.read(archivo, "phylip"))
         # for alignment in align:
@@ -142,6 +185,7 @@ def LeerMSA():
         # filas = align_pd.shape[0]
         msa.append(align_pd)
         return align_pd
+
 
 # Paso 3 calculo de porcentajes
 def CargaPorcentajes():
@@ -156,23 +200,24 @@ def CargaPorcentajes():
         porcentajes[c] = porcentajes_aux
         c += 1
 
-def CargarConservados():
+
+def CargarConservados(porcentaje=90):
     x = []
     y = []
     x_labels = []
     for p, porcentajesP in porcentajes.items():
         for i, valor in porcentajesP.items():
-            if valor[1][0] > 90:
+            if valor[1][0] > porcentaje:
                 x.append(i)
                 y.append(valor[1][0])
                 x_labels.append(valor[0][0])
-                # print(p, valor,i)
                 patron[i] = valor[0]
         matrix = np.array([x, x_labels])
         x = []
         y = []
         x_labels = []
         conservados[p] = matrix
+
 
 def Imprimir():
     riesgo, opcion = ListarMSA()
@@ -182,13 +227,15 @@ def Imprimir():
     for j in range(len(matrix[0])):
         print("Riesgo: ", riesgo, "Posición: ", matrix[0][j], "Aminoacido", matrix[1][j])
     print()
+#
 
-def GraficarBarras1():
+def GraficarBarras1(porcentaje=90):
     riesgo, opcion = ListarMSA()
     matrix = conservados.get(opcion)
     if matrix is None:
         matrix = [[0, 0], [0, 0]]
     Utils.GraficarBarrasV1("", matrix, riesgo, "")
+
 
 def ListarMSA():
     print("Lista de agrupacion de genomas: ")
@@ -201,9 +248,66 @@ def ListarMSA():
         c += 1
     opcion = int(input("Elija un número: ")) - 1
     riesgo = aux_clasificacion[opcion]
+
+    """
+    Número: 1 Clasificación: high
+    Número: 2 Clasificación: low
+    Número: 3 Clasificación: unspecified
+    """
     return riesgo, opcion
 
-def SubMenu1():
+
+def SubMenuGraficasPares(matriz, matriz_a, matriz_b):
+    print("Que desea realizar:")
+    print("1- Graficar ambos genomas en una matriz")
+    print("2- Graficar genoma 1")
+    print("3- Graficar genoma 2")
+    print("4- Volver al menu principal")
+    print("5- Salir")
+    CargaBD.LeerInicio()
+    opcion_principal = int(input("Ingrese una opción: "))
+    if opcion_principal == 1:
+        Utils.GraficarMatriz(matriz, genoma1, genoma2)
+        #SubMenuPares()
+        SubMenuGraficasPares(matriz, matriz_a, matriz_b)
+    if opcion_principal == 2:
+        Utils.GraficarBarrasPares("", matriz_a, "", "", 50)
+        #SubMenuPares()
+        SubMenuGraficasPares(matriz, matriz_a, matriz_b)
+    if opcion_principal == 3:
+        Utils.GraficarBarrasPares("", matriz_b, "", "", 50)
+        Menu()
+    if opcion_principal == 4:
+        principal.Menu()
+    if opcion_principal == 5:
+        print("Gracias por utilizar BIOG5")
+        sys.exit()
+
+def SubMenuSeleecionGenomas():
+    print("Que desea realizar:")
+    print("1- Selecionar multiples genomas a alinear")
+    print("2- Correr alinemiento contra todos los genomas almacenados")
+    print("3- Volver al menu anterior")
+    print("4- Volver al menu principal")
+    print("5- Salir")
+    opcion_principal = int(input("Ingrese una opción: "))
+    if opcion_principal == 1:
+        Utils.ListarGenomas()
+        lista = AgrupacionIngresados()
+        AgruparArchivosIngresados(lista)
+    if opcion_principal == 2:
+        ListarArchivos()
+        print("Se alineran la siguientes genomas, espere por favor ...")
+        AgruparArchivos()
+    if opcion_principal == 3:
+        Menu()
+    if opcion_principal == 4:
+        principal.Menu()
+    if opcion_principal == 5:
+        print("Gracias por utilizar BIOG5")
+        sys.exit()
+
+def SubMenu1(porcentaje=90):
     print("### Modulo: Alineamiento multiples ###")
     print()
     print("Que desea realizar:")
@@ -227,50 +331,41 @@ def SubMenu1():
     if opcion_principal == 5:
         print("Gracias por utilizar BIOG5")
         sys.exit()
+
+
 # Menu()
 
 def Algoritmo2():
-    print("### Se alinean todos los genomas listados ### ")
-    global matriz, align_pares, align_pd
-    global archivos_MSA, archivos_genomas, genomas, conservados
+    print("### Se alinearan multiples genomas ### ")
+    porcentaje = int(input("Ingrese el porcentaje minimo de conservación de una posición: "))
+    global matriz, align_pares, align_pd, archivos_MSA, archivos_genomas, genomas, conservados
+    global archivos_agrupados, msa, porcentajes, patron
     archivos_MSA = []
     archivos_genomas = {}
     genomas = CargaBD.genomas
     conservados = {}
-    print("1: Obteniendo archivos de Base de Datos, espere por favor ...")
-    ListarArchivos()
-    global archivos_agrupados
     archivos_agrupados = []
+    print("1: Obteniendo archivos de Base de Datos, espere por favor ...")
     print("2: Agrupando archivos, espere por favor ...")
-    AgruparArchivos()
+    print()
+    SubMenuSeleecionGenomas()
     print("3: Corriendo Clustal Omega, espere por favor ...")
-    # CorrerClustalOmega()
-    global msa
+    CorrerClustalOmega()
     msa = []
     align_pd = LeerMSA()
-    global porcentajes, patron
     porcentajes = {}
     patron = {}
     print("4: Cargando porcentajes, espere por favor ...")
     CargaPorcentajes()
     print("5: Filtrando porcentajes con >90% de conservación, espere por favor ...")
-    CargarConservados()
+    CargarConservados(porcentaje=90)
     # GraficarBarras()
     print("Calculos terminados analizar resultados: ")
     print()
     SubMenu1()
-# Algoritmo2()
 
-def Main():
-    matriz, align_pares = AlinearGenomasAPares(genoma1, genoma2)
-    # GraficarMatriz(matriz,genoma1,genoma2)
-    AgruparArchivos()
-    align_pd = LeerMSA()
-    CorrerClustalOmega()
-    CargaPorcentajes()
-    Imprimir()
-    # GraficarBarras()
-# Main()
+
+# Algoritmo2()
 
 def Menu():
     print()
@@ -296,7 +391,7 @@ def Menu():
         Algoritmo1()
         Menu()
     if opcion_principal == 4:
-        Utils.ListarGenomas()
+        #Utils.ListarGenomas()
         Algoritmo2()
         Menu()
     if opcion_principal == 5:
@@ -304,4 +399,4 @@ def Menu():
     if opcion_principal == 6:
         print("Gracias por utilizar BIOG5")
         sys.exit()
-#Menu()
+# Menu()

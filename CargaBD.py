@@ -44,6 +44,9 @@ unspecified = None
 high_risk = None
 low_risk = None
 proteinas = {}
+proteinas_dictReader = {}
+genomas_dictReader = {}
+archivos_agrupados_gen = ['BD/E1.fasta', 'BD/E2.fasta', 'BD/E7.fasta', 'BD/L1.fasta', 'BD/L2.fasta']
 archivos_agrupados = ['BD/high_riskE1.fasta', 'BD/high_riskE2.fasta', 'BD/high_riskE7.fasta', 'BD/high_riskL1.fasta',
                       'BD/high_riskL2.fasta', 'BD/high_riskE1.fasta', 'BD/high_riskE2.fasta', 'BD/high_riskE7.fasta',
                       'BD/high_riskL1.fasta', 'BD/high_riskL2.fasta', 'BD/high_riskE1.fasta', 'BD/high_riskE2.fasta',
@@ -88,9 +91,10 @@ conservados = {1: ["Alto Riesgo", "E1", "high_riskE1_MSA"], 2: ["Alto Riesgo", "
 def LeerListaProteinas():
     bd = 'proteinas.csv'
     archivo = "BD/" + bd
-    global proteinas
+    global proteinas, proteinas_dictReader
     handle = open(archivo)
     reader = list(csv.DictReader(handle))
+    proteinas_dictReader = reader
     # print("Leyendo lista de proteina, espere por favor...")
     for row in reader:
         key = row['#Genoma']
@@ -105,8 +109,9 @@ def LeerListaGenomas():
     bd = 'genomas.csv'
     archivo = "BD/" + bd
     handle = open(archivo)
-    global genomas
+    global genomas, genomas_dictReader
     reader = list(csv.DictReader(handle))
+    genomas_dictReader = reader
     # print("Leyendo lista de genomas espere por favor...")
     for row in reader:
         # print(row['#Genoma'],row['IdProtein'])

@@ -93,8 +93,55 @@ def ListarProteinas():
         c += 1
     print()
 
+def GraficarBarrasPares2(leyenda_proteina="", matrix=0, x=[], y=[], riesgo_cepa=""):
+        x_labels = x
+        x = [count for count, value in enumerate(x)]
+        plt.figure(figsize=(14, 6))
+        plt.bar(x, y)
+        plt.xlabel("Cepas")
+        plt.ylabel("Bit score")
+        titulo = "Comparaciones modelos HMM de alto riesgo vs " + riesgo_cepa + "riesgo - Proteina: " +leyenda_proteina
+        plt.title(titulo)
+        plt.xticks(x, x_labels)
+        salida = "IMG/"+riesgo_cepa+leyenda_proteina+ ".png"
+        plt.savefig(salida)
+        plt.show()
+        print("Se ha guardado el gráfico en: ", salida)
+        print()
 
-def GraficarBarrasV1(g="", matrixFiltrada=0, riesgo="", proteina=""):
+def GraficarBarrasPares(g="", matrix=0, riesgo="", proteina="", porcentaje=90):
+    a = np.array(matrix[0]).astype(int)
+    largo = int(max(a)) + 1
+    salir, inicio, fin = MenuRango(largo, riesgo, proteina)
+    leyenda_proteina = " Proteina:"
+    if proteina == "":
+        leyenda_proteina = " "
+    if salir == False:
+        x = np.array(matrix[0])
+        y = np.array(matrix[1])
+        for count, valor in enumerate(y):
+            if valor != "":
+                y[count] = porcentaje
+            else:
+                y[count] = 0
+        y = y.astype(int)
+        x_labels = matrix[1]
+        plt.figure(figsize=(14, 6))
+        plt.bar(x, y)
+        plt.xlabel("Aminoacidos")
+        plt.ylabel("Porcentaje de conservación")
+        titulo = "Análisis del virus del Papiloma Humano - Clasificación: " + riesgo + leyenda_proteina + proteina
+        plt.title(titulo)
+        plt.xticks(x, x_labels)
+        # Es muy largo para graficar todo solo muestro una parte
+        plt.xlim(inicio, fin)
+        salida = "IMG/" + str(g) + ".png"
+        plt.savefig(salida)
+        plt.show()
+        print("Se ha guardado el gráfico en: ", salida)
+        print()
+
+def GraficarBarrasV1(g="", matrixFiltrada=0, riesgo="", proteina="", porcentaje=90):
     largo, matrix = RegenerarMatriz(matrixFiltrada)
     salir, inicio, fin = MenuRango(largo, riesgo, proteina)
     leyenda_proteina = " Proteina:"
@@ -105,7 +152,7 @@ def GraficarBarrasV1(g="", matrixFiltrada=0, riesgo="", proteina=""):
         y = np.array(matrix[1])
         for count, valor in enumerate(y):
             if valor != "":
-                y[count] = 90
+                y[count] = porcentaje
             else:
                 y[count] = 0
         y = y.astype(int)
@@ -143,6 +190,24 @@ def GraficarMatriz(matriz, genoma1, genoma2):
     # plt.savefig(titulo+'.png', bbox_inches='tight')
     # plt.close()
 
+def GraficarMatriz2(matriz, genoma1, genoma2):
+    fig, ax = plt.subplots()
+    plt.xlabel(genoma1)
+    plt.ylabel(genoma2)
+    titulo = "Análisis del virus del Papiloma Humano "
+    plt.title(titulo, fontsize=8)
+    plt.figure(figsize=(16, 10))
+    im = ax.imshow(matriz, interpolation='nearest', origin='lower')
+    ax.set_xticklabels(genoma1)
+
+    fig.colorbar(im)
+    salida = "IMG/.png"
+    plt.savefig(salida)
+    plt.show()
+    print("Se ha guardado el gráfico en: ", salida)
+    # plt.imshow(Z2, cmap ="Greens", alpha = 0.7, interpolation ='bilinear', extent = extent)
+    # plt.savefig(titulo+'.png', bbox_inches='tight')
+    # plt.close()
 
 """
 def ExisteG(archivos):
