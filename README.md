@@ -52,7 +52,7 @@ Lista de genomas
   2.1 Se realiza un alineamiento multiple (MSA) con Clustal Omega de todas las proteinas aprupadas por riesgos 
   
   2.2 Se generan y visualizan árboles filogenticos asociados a cada proteina
-</pr>
+</pre>
 
 2.1 Interfaz 
 
