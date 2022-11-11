@@ -69,7 +69,7 @@ Lista de genomas
   3.2 Se comparan las cepas con cada modelo
 
   3.3 Se visualizan los resultados de forma impresa y gráfica
-</pr>
+</pre>
 
 3.2 Salida impresa
 
@@ -86,7 +86,7 @@ Lista de genomas
   4.2 Se filtran solo los aminoacidos con un porcentaje de conservación ingresado
 
   4.3 Se visualizan los resultados de forma impresa y gráfica
-</pr>
+</pre>
 
 Sub menu
  
