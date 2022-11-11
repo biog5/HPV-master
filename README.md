@@ -131,9 +131,10 @@ Salida gráfica
 !["E6-2"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R6-2.png)
 
 5.3 Se visualiza
-!["E6-3"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R6-3.png)
 
 !["E6-3"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R6-3.png)
+
+!["E6-4"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R6-4.png)
 
 7- Configurar riesgos
 <pre>
@@ -154,7 +155,7 @@ Salida gráfica
 
 !["E7-2"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R7-2.png)
 
- 7.2 Ejemplo agregar una una nueva cepa
+ 7.2 Ejemplo agregar una nueva cepa
  
 !["E7-3"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R7-3.png)
 
