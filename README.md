@@ -22,6 +22,7 @@ Main
   
   1.3. Análisis de resultados 
 </pre>
+
 Menu
 
 !["E1-1"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R1-1.png)
@@ -46,10 +47,9 @@ Lista de genomas
 
 !["E1-6"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R1-6.png)
 
-2- Alineamiento MSA: Se utilza Clustal Omega y librerias de biopython
-
+2- Alineamiento MSA
 <pre>
-  2.1 Se realiza un alineamiento multiple (MSA) de todas las proteinas aprupadas por riesgos 
+  2.1 Se realiza un alineamiento multiple (MSA) con Clustal Omega de todas las proteinas aprupadas por riesgos 
   
   2.2 Se generan y visualizan árboles filogenticos asociados a cada proteina
 </pr>
