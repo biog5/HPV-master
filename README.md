@@ -54,3 +54,10 @@ Lista de genomas
   2.2 Se generan y visualizan árboles filogenticos asociados a cada proteina
 </pr>
 
+2.1 Interfaz 
+
+!["E2-0"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R2-0.png)
+
+2.2 Árboles Filogenticos
+
+!["E2-1"](https://github.com/biog5/HPV-master/blob/main/IMG/FrontEnd/A-R2-1.png)
