@@ -93,21 +93,23 @@ def ListarProteinas():
         c += 1
     print()
 
+
 def GraficarBarrasPares2(leyenda_proteina="", matrix=0, x=[], y=[], riesgo_cepa=""):
-        x_labels = x
-        x = [count for count, value in enumerate(x)]
-        plt.figure(figsize=(14, 6))
-        plt.bar(x, y)
-        plt.xlabel("Cepas")
-        plt.ylabel("Bit score")
-        titulo = "Comparaciones modelos HMM de alto riesgo vs " + riesgo_cepa + "riesgo - Proteina: " +leyenda_proteina
-        plt.title(titulo)
-        plt.xticks(x, x_labels)
-        salida = "IMG/"+riesgo_cepa+leyenda_proteina+ ".png"
-        plt.savefig(salida)
-        plt.show()
-        print("Se ha guardado el gráfico en: ", salida)
-        print()
+    x_labels = x
+    x = [count for count, value in enumerate(x)]
+    plt.figure(figsize=(14, 6))
+    plt.bar(x, y)
+    plt.xlabel("Cepas")
+    plt.ylabel("Bit score")
+    titulo = "Comparaciones modelos HMM de alto riesgo vs " + riesgo_cepa + "riesgo - Proteina: " + leyenda_proteina
+    plt.title(titulo)
+    plt.xticks(x, x_labels)
+    salida = "IMG/" + riesgo_cepa + leyenda_proteina + ".png"
+    plt.savefig(salida)
+    plt.show()
+    print("Se ha guardado el gráfico en: ", salida)
+    print()
+
 
 def GraficarBarrasPares(g="", matrix=0, riesgo="", proteina="", porcentaje=90):
     a = np.array(matrix[0]).astype(int)
@@ -140,6 +142,7 @@ def GraficarBarrasPares(g="", matrix=0, riesgo="", proteina="", porcentaje=90):
         plt.show()
         print("Se ha guardado el gráfico en: ", salida)
         print()
+
 
 def GraficarBarrasV1(g="", matrixFiltrada=0, riesgo="", proteina="", porcentaje=90):
     largo, matrix = RegenerarMatriz(matrixFiltrada)
@@ -190,6 +193,7 @@ def GraficarMatriz(matriz, genoma1, genoma2):
     # plt.savefig(titulo+'.png', bbox_inches='tight')
     # plt.close()
 
+
 def GraficarMatriz2(matriz, genoma1, genoma2):
     fig, ax = plt.subplots()
     plt.xlabel(genoma1)
@@ -208,6 +212,7 @@ def GraficarMatriz2(matriz, genoma1, genoma2):
     # plt.imshow(Z2, cmap ="Greens", alpha = 0.7, interpolation ='bilinear', extent = extent)
     # plt.savefig(titulo+'.png', bbox_inches='tight')
     # plt.close()
+
 
 """
 def ExisteG(archivos):

@@ -23,7 +23,6 @@ leyendas = ["Alto Riesgo", "Bajo Riesgo", "No Determinado Riesgo"]
 CargaBD.LeerInicio()
 
 
-
 def LeerListaClasificacionGuardar(bd='clasificacion.csv'):
     archivo = "BD/" + bd
     global unspecified, high_risk, low_risk
@@ -37,6 +36,8 @@ def LeerListaClasificacionGuardar(bd='clasificacion.csv'):
     unspecified = lista["unspecified"]
     high_risk = lista["high_risk"]
     low_risk = lista["low_risk"]
+
+
 LeerListaClasificacionGuardar()
 
 
@@ -56,19 +57,21 @@ def ListaIndividual(row, leyenda):
     for count_b, value in enumerate(row):
         print(count_b + 1, ":", value)
 
+
 def ListaIndividualN(archivo, columna_a, columna_b, leyenda):
     print("Lista de cepas de", leyenda)
     handle = open(archivo)
     reader = list(csv.DictReader(handle))
     # print("Leyendo lista de proteina, espere por favor...")
-    c=1
+    c = 1
     for row in reader:
         key = row[columna_a]
         valor = row[columna_b]
-        print(c,key,valor)
-        c+=1
+        print(c, key, valor)
+        c += 1
     handle.close()
     return reader
+
 
 def Alta(row, valor):
     row.append(valor)
@@ -88,6 +91,38 @@ def Baja(row, indice):
 def Modificacion(row, valor, indice):
     row[indice] = valor
     return row
+
+
+def RestaurarG():
+    bd_g0 = 'genomas-backup.csv'
+    archivo_g0 = "BD/" + bd_g0
+    bd_g1 = 'genomas.csv'
+    archivo_g1 = "BD/" + bd_g1
+    handle_g0 = open(archivo_g0)
+    reader_g0 = list(csv.DictReader(handle_g0))
+    with open(archivo_g1, 'w', newline='') as csvfile:
+        fieldnames = ['#Genoma', 'IdGenoma']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in reader_g0:
+            writer.writerow(row)
+    handle_g0.close()
+
+
+def RestaurarP():
+    bd_g0 = 'proteinas-backup.csv'
+    archivo_g0 = "BD/" + bd_g0
+    bd_g1 = 'proteinas.csv'
+    archivo_g1 = "BD/" + bd_g1
+    handle_g0 = open(archivo_g0)
+    reader_g0 = list(csv.DictReader(handle_g0))
+    with open(archivo_g1, 'w', newline='') as csvfile:
+        fieldnames = ['#Genoma', 'IdProtein']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in reader_g0:
+            writer.writerow(row)
+    handle_g0.close()
 
 
 def GrabarClasificacion():
@@ -115,6 +150,7 @@ def SubMenuBaja(row):
         print("Se ha eliminado correctamente el item", elemento)
     return salida
 
+
 def SubMenuAlta(row):
     print()
     valor = input("Ingrese la nueva cepa formato HPV'numero' (0 Volver atras): ")
@@ -125,10 +161,12 @@ def SubMenuAlta(row):
         print("Se ha agregado correctamente el item", valor)
     return salida
 
-def AltaN(row, genoma,ide, columna_a, columna_b):
+
+def AltaN(row, genoma, ide, columna_a, columna_b):
     dicc = {columna_a: genoma, columna_b: ide}
     row.append(dicc)
     return row
+
 
 def SubMenuNAP(row, columna_a, columna_b):
     print()
@@ -138,10 +176,11 @@ def SubMenuNAP(row, columna_a, columna_b):
     if cepa == "0" or proteina == "0" or cepa == "0":
         Menu()
     else:
-        genoma = cepa+proteina
+        genoma = cepa + proteina
         salida = AltaN(row, genoma, ide, columna_a, columna_b)
-        print("Se ha agregado correctamente el item", genoma,ide)
+        print("Se ha agregado correctamente el item", genoma, ide)
     return salida
+
 
 def SubMenuNAG(row, columna_a, columna_b):
     print()
@@ -151,8 +190,9 @@ def SubMenuNAG(row, columna_a, columna_b):
         Menu()
     else:
         salida = AltaN(row, genoma, ide, columna_a, columna_b)
-        print("Se ha agregado correctamente el item", genoma,ide)
+        print("Se ha agregado correctamente el item", genoma, ide)
     return salida
+
 
 def SubMenuModificacion(row):
     print("### Modulo: Configurar Riesgos ###")
@@ -169,7 +209,7 @@ def SubMenuModificacion(row):
     return salida
 
 
-def SubMenuModificacionN(row,columna_a,columna_b):
+def SubMenuModificacionN(row, columna_a, columna_b):
     print("### Modulo: Configurar Riesgos ###")
     print()
     indice = int(input("Ingrese una indice del elemento (0 Volver atras): "))
@@ -177,16 +217,18 @@ def SubMenuModificacionN(row,columna_a,columna_b):
         Menu()
     else:
         genoma = input("Ingrese la nueva cepa formato HPV'numero' (0 Volver atras): ")
-        ide = input("Ingrese Ingrese el identificador ref_seq NCBI ejemplo (CAA75467.1, NP_040287.1, etc) ' (0 Volver atras): ")
+        ide = input(
+            "Ingrese Ingrese el identificador ref_seq NCBI ejemplo (CAA75467.1, NP_040287.1, etc) ' (0 Volver atras): ")
         if genoma != "0" and ide != "0":
-            valor= {columna_a: genoma, columna_b: ide}
+            valor = {columna_a: genoma, columna_b: ide}
             valor_anterior = row[indice - 1]
             salida = Modificacion(row, valor, indice - 1)
             print("Se ha modificado correctamente", valor_anterior, "por", valor)
     return salida
 
-def SubMenuModificacionNP(row,columna_a,columna_b):
-    salida=[]
+
+def SubMenuModificacionNP(row, columna_a, columna_b):
+    salida = []
     print("### Modulo: Configurar Riesgos ###")
     print()
     indice = int(input("Ingrese una indice del elemento (0 Volver atras): "))
@@ -198,11 +240,12 @@ def SubMenuModificacionNP(row,columna_a,columna_b):
         ide = input("Ingrese el identificador NCBI ejemplo (CAA75467.1, NP_040287.1, etc)' (0 Volver atras): ")
     if cepa != "0" or proteina != "0" or cepa != "0":
         genoma = cepa + proteina
-        valor= {columna_a: genoma, columna_b: ide}
+        valor = {columna_a: genoma, columna_b: ide}
         valor_anterior = row[indice - 1]
         salida = Modificacion(row, valor, indice - 1)
         print("Se ha modificado correctamente", valor_anterior, "por", valor)
     return salida
+
 
 def GuardarGlobal(lista, indice):
     global unspecified, high_risk, low_risk
@@ -214,17 +257,14 @@ def GuardarGlobal(lista, indice):
         unspecified = lista
     GrabarClasificacion()
 
+
 def RestaurarC():
     LeerListaClasificacionGuardar('clasificacion-backup.csv')
     GrabarClasificacion()
     print("Se han restaurado correctamente las listas de riesgos")
 
-def RestaurarP():
-    LeerListaClasificacionGuardar('proteinas-backup.csv')
-    GrabarClasificacion()
-    print("Se han restaurado correctamente las listas de riesgos")
 
-def GrabarDicc(lista_nueva, archivo='proteinas2.csv', columna_a= "#Genoma", columna_b= "IdProtein",leyenda = "Proteinas"):
+def GrabarDicc(lista_nueva, archivo='proteinas.csv', columna_a="#Genoma", columna_b="IdProtein", leyenda="Proteinas"):
     import csv
     with open(archivo, 'w+', newline='') as csvfile:
         fieldnames = [columna_a, columna_b]
@@ -232,6 +272,7 @@ def GrabarDicc(lista_nueva, archivo='proteinas2.csv', columna_a= "#Genoma", colu
         writer.writeheader()
         for fila in lista_nueva:
             writer.writerow(fila)
+
 
 def SubMenu1():
     global unspecified, high_risk, low_risk
@@ -277,17 +318,18 @@ def SubMenu1():
         print("Gracias por utilizar BIOG5")
         sys.exit()
 
+
 def SubMenuN1():
     global unspecified, high_risk, low_risk
     operacion_leyenda = ["Agregar", "Modificar", "Eliminar"]
     CargaBD.LeerInicio()
     proteina_lista = CargaBD.proteinas_dictReader
     genoma_lista = CargaBD.genomas_dictReader
-    bd_p = 'proteinas2.csv'
+    bd_p = 'proteinas.csv'
     archivo_p = "BD/" + bd_p
     columna_a_p = "#Genoma"
     columna_b_p = "IdProtein"
-    bd_g = 'genomas2.csv'
+    bd_g = 'genomas.csv'
     archivo_g = "BD/" + bd_g
     columna_a_g = "#Genoma"
     columna_b_g = "IdGenoma"
@@ -345,9 +387,9 @@ def SubMenuN1():
         ListaIndividualN(archivo_p, columna_a_p, columna_b_p, "Proteinas")
 
     if operacion == 7:
-        Restaurar()
+        RestaurarG()
     if operacion == 8:
-        Restaurar()
+        RestaurarP()
     if operacion == 9:
         Menu()
     if operacion == 10:
@@ -355,6 +397,7 @@ def SubMenuN1():
     if operacion == 11:
         print("Gracias por utilizar BIOG5")
         sys.exit()
+
 
 def SubMenu2(leyenda):
     print()

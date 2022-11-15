@@ -20,8 +20,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
+
 warnings.filterwarnings("ignore")
-#%matplotlib inline
+
+
+# %matplotlib inline
 #  https://www.papilocare.com/copia-de-caracteristicas
 
 def LeerBD():
@@ -31,8 +34,9 @@ def LeerBD():
         global high_risk
         CargaBD.LeerInicio()
         unspecified_risk = CargaBD.unspecified
-        low_risk = CargaBD.low_risk 
+        low_risk = CargaBD.low_risk
         high_risk = CargaBD.high_risk
+
 
 LeerBD()
 
@@ -48,15 +52,17 @@ archivos_temp = []
 archivos_agrupados = CargaBD.archivos_agrupados
 archivos_agrupados_gen = CargaBD.archivos_agrupados_gen
 archivos_MSA = []
-bandera_agrupada=0
+bandera_agrupada = 0
 
 ############################# 2.1: Agrupacion
 # Leer
 genes = ["E1", "E2", "E7", "L1", "L2"]
-control_grabados=[]
+control_grabados = []
+
+
 def LeerYGrabar(proteina, salida):
     global control_grabados
-    grabacion=[str(proteina) + str(salida)]
+    grabacion = [str(proteina) + str(salida)]
     if grabacion not in control_grabados:
         control_grabados.append([str(proteina) + str(salida)])
         archivo = 'BD/' + proteina + '.fasta'
@@ -65,22 +71,24 @@ def LeerYGrabar(proteina, salida):
 
 
 def BuscarNombres(genoma, gen):
-    genoma=genoma.upper()
+    genoma = genoma.upper()
     for nombre, k in CargaBD.proteinas.items():
-        #tamanio1=len(nombre)
-        #tamanio2=len(genoma+gen)+1
-        intermedio=nombre[len(genoma):-(len(gen))]
-        if (genoma in nombre) and (gen in nombre) :
-            if len(intermedio)<=1 and (intermedio.isdigit()==False):
+        # tamanio1=len(nombre)
+        # tamanio2=len(genoma+gen)+1
+        intermedio = nombre[len(genoma):-(len(gen))]
+        if (genoma in nombre) and (gen in nombre):
+            if len(intermedio) <= 1 and (intermedio.isdigit() == False):
                 return nombre
+
 
 def Limpiar(archivos):
     from os import remove
     from os import path
     for i in archivos:
         if path.exists(i):
-            #print("Eliminando: ",i)
+            # print("Eliminando: ",i)
             remove(i)
+
 
 def AgruparRiesgos():
     # Primero grabo las protenias ojetivo de alto riesgo
@@ -162,19 +170,20 @@ Ejemplo parametros
 -outfmt "7  #formato
 """
 
-#globales
+# globales
 comparaciones_full = [{}, {}, {}]
-detalles_aln={}
+detalles_aln = {}
 dicc_querry = {}
 cont_querry = 0
-contador_comparaciones=0
+contador_comparaciones = 0
 Limpiar(archivos_agrupados)  # Solo una vez al iniciar y lo dejo xq lo necesita MSA
 Limpiar(archivos_agrupados_gen)
 Limpiar(archivos_temp)
-control_grabados=[]
+control_grabados = []
+
 
 def reinciarBlast():
-    global archivos_agrupados,archivos_agrupados_gen, bandera_agrupada,comparaciones_full,archivos_temp
+    global archivos_agrupados, archivos_agrupados_gen, bandera_agrupada, comparaciones_full, archivos_temp
     comparaciones_full = [{}, {}, {}]
     detalles_aln = {}
     dicc_querry = {}
@@ -186,14 +195,14 @@ def reinciarBlast():
     bandera_agrupada = 0
 
 
-def Recorrer(resultados,genoma,gen,riesgo):
+def Recorrer(resultados, genoma, gen, riesgo):
     c = 0
     lista_aux = []
-    lista_hit=[]
+    lista_hit = []
     global dicc_querry
     global cont_querry
-    dicc_hsp={}
-    cont_hsp=0
+    dicc_hsp = {}
+    cont_hsp = 0
     for query in resultados:
         cepa_query = str(query.description)[-4:-1].replace(" ", "")
         # solo corro el primero que blast tre ordenado por el mejor
@@ -202,8 +211,8 @@ def Recorrer(resultados,genoma,gen,riesgo):
         cepa_query = "HPV" + str(cepa_query).upper()
 
         for hit in query:
-            parte_numero=(str(hit.description)[-4:-1]).replace(" ", "")
-            if not(parte_numero[0].isdigit()):
+            parte_numero = (str(hit.description)[-4:-1]).replace(" ", "")
+            if not (parte_numero[0].isdigit()):
                 parte_numero = parte_numero[1]
             cepa2 = "HPV" + str(parte_numero).upper()
             # 1 hacer uno solo
@@ -211,28 +220,29 @@ def Recorrer(resultados,genoma,gen,riesgo):
             cont_hsp = 0
             dicc_hsp = {}
             for hsp in hit:
-                #print(cepa2, hsp.bitscore)
-                #if cepa2=="HPV68a":
-                    #opcion_principal = int(input("Ingrese una opción: "))
+                # print(cepa2, hsp.bitscore)
+                # if cepa2=="HPV68a":
+                # opcion_principal = int(input("Ingrese una opción: "))
                 # por cada hit hay varias diagonales
                 # puedo elegir la mejor bitscore del hit y mostrar detalles
                 # 2 guardar datos de los hsp con
-                #hsp.ident_num
-                #hsp.pos_num
-                #hsp.gap_num
-                #hsp.aln_span
+                # hsp.ident_num
+                # hsp.pos_num
+                # hsp.gap_num
+                # hsp.aln_span
                 if cepa_query == "HPV7":
-                    cepa_query= "HPV18"
+                    cepa_query = "HPV18"
                 if cepa2 == "HPV7":
-                    cepa2= "HPV18"
-                indice= str(riesgo)+cepa2+gen+cepa_query
-                dicc_hsp[cont_hsp] = [hsp.bitscore, hsp.ident_num,hsp.pos_num,hsp.gap_num,hsp.aln_span,cepa_query,cepa2,genoma,gen]
+                    cepa2 = "HPV18"
+                indice = str(riesgo) + cepa2 + gen + cepa_query
+                dicc_hsp[cont_hsp] = [hsp.bitscore, hsp.ident_num, hsp.pos_num, hsp.gap_num, hsp.aln_span, cepa_query,
+                                      cepa2, genoma, gen]
                 lista_aux.append([cepa2, int(hsp.bitscore)])
                 c += 1
                 cont_hsp += 1
             dicc_querry[indice] = dicc_hsp
             cont_querry += 1
-            #break # para elegir un solo hit el primero
+            # break # para elegir un solo hit el primero
     return cepa_query, lista_aux
 
 
@@ -242,7 +252,7 @@ def AlinearRiesgos():
     for gen in genes:
         archivo_low = "BD/low_risk" + gen + '.fasta'
         archivo_unspecified = "BD/unspecified_risk" + gen + '.fasta'
-        archivo_high2= "BD/high_risk" + gen + '.fasta'
+        archivo_high2 = "BD/high_risk" + gen + '.fasta'
 
         for genoma in high_risk:  # por cada genoma y gen de alto rieago
             archivo_entrada = BuscarNombres(str(genoma), str(gen))
@@ -266,7 +276,6 @@ def AlinearRiesgos():
                     stdout=PIPE)
                 print("Corriendo BLASTP ---> Cepa:", genoma, " Proteina:", gen, " Contra grupo: Alto riego ")
 
-
                 archivos_temp.append(archivo_salida)
                 archivos_temp.append(archivo_salida2)
                 archivos_temp.append(archivo_salida3)
@@ -274,9 +283,9 @@ def AlinearRiesgos():
                 resultados2 = list(bpio.parse(archivo_salida2, 'blast-text'))
                 resultados3 = list(bpio.parse(archivo_salida3, 'blast-text'))
 
-                cepa_query, lista_aux = Recorrer(resultados,genoma,gen,0)
-                cepa_query2, lista_aux2 = Recorrer(resultados2,genoma,gen,1)
-                cepa_query3, lista_aux3 = Recorrer(resultados3,genoma,gen,2)
+                cepa_query, lista_aux = Recorrer(resultados, genoma, gen, 0)
+                cepa_query2, lista_aux2 = Recorrer(resultados2, genoma, gen, 1)
+                cepa_query3, lista_aux3 = Recorrer(resultados3, genoma, gen, 2)
                 comparaciones_full[0][archivo_entrada] = lista_aux
                 comparaciones_full[1][archivo_entrada] = lista_aux2
                 comparaciones_full[2][archivo_entrada] = lista_aux3
@@ -285,10 +294,11 @@ def AlinearRiesgos():
 
 
 ############################# 2.3: Análisis
-lista_cepas=[]
+lista_cepas = []
 tamanio = 17
-matriz  = np.zeros((tamanio, tamanio))
+matriz = np.zeros((tamanio, tamanio))
 import pandas as pd
+
 
 def GraficarA(objetivo, x, y, proteina, cepa):
     plt.figure(figsize=(12, 6))
@@ -301,10 +311,13 @@ def GraficarA(objetivo, x, y, proteina, cepa):
     plt.title(titulo)
     archivo_grafica = "IMG/" + titulo2 + ".png"
     plt.savefig(archivo_grafica)
+
+
 dicc_proteina = {}
 dicc_aux = {}
 
-def AnalizarB(leyenda, E1, E2, E7, L1, L2,count=0,dicc_valores=0):
+
+def AnalizarB(leyenda, E1, E2, E7, L1, L2, count=0, dicc_valores=0):
     global contador_comparaciones, dicc_aux
     global lista_cepas, matriz
 
@@ -312,32 +325,34 @@ def AnalizarB(leyenda, E1, E2, E7, L1, L2,count=0,dicc_valores=0):
         print()
         print("Relaciones evolutivas con mejores scores encontradas para la proteina", i)
         print("Cepa", leyenda, "Riesgo ______ Cepa Alto Riesgo")
-        x=eval(i).items()
+        x = eval(i).items()
         for versus, altos in eval(i).items():
-            print(leyenda,":",versus)
-            #print("altos:",altos)
+            print(leyenda, ":", versus)
+            # print("altos:",altos)
             # debor re ordenar altos
-            altos_aux=[]
+            altos_aux = []
             for j in altos:
                 indice = str(count) + str(versus) + i + str(j)
                 datos = dicc_querry.get(indice)
                 bitscore = datos[0][0]
                 altos_aux.append([j, bitscore])
-            altos_aux = sorted(altos_aux, key=lambda x: x[1],reverse=True)
-            #altos= [x[0] for x in altos_aux ]
+            altos_aux = sorted(altos_aux, key=lambda x: x[1], reverse=True)
+            # altos= [x[0] for x in altos_aux ]
             dicc_aux[versus] = altos[:4]
             for j in altos:
-                #indice=dicc_valores.get(str(count)+str(versus)+i+str(j))
-                indice = str(count)+str(versus)+i+str(j)
-                datos=dicc_querry.get(indice)
-                bitscore=datos[0][0]
+                # indice=dicc_valores.get(str(count)+str(versus)+i+str(j))
+                indice = str(count) + str(versus) + i + str(j)
+                datos = dicc_querry.get(indice)
+                bitscore = datos[0][0]
                 positivos = datos[0][1]
                 gaps = datos[0][3]
-                print("|______indice = ",contador_comparaciones,"cepa:", j," bitscore:", bitscore," positivos:", positivos," gaps:", gaps)
-                contador_comparaciones +=1
-        dicc_proteina[(i,count)] = dicc_aux
+                print("|______indice = ", contador_comparaciones, "cepa:", j, " bitscore:", bitscore, " positivos:",
+                      positivos, " gaps:", gaps)
+                contador_comparaciones += 1
+        dicc_proteina[(i, count)] = dicc_aux
         dicc_aux = {}
-    #comentario
+    # comentario
+
 
 def InicializarDiccionarios():
     E1 = {}
@@ -345,14 +360,15 @@ def InicializarDiccionarios():
     E7 = {}
     L1 = {}
     L2 = {}
-    return E1,E2,E7,L1,L2
+    return E1, E2, E7, L1, L2
+
 
 def AnalizarA():
     E1, E2, E7, L1, L2 = InicializarDiccionarios()
     leyendas = ["Bajo", "No especificado", "Alto"]
     dicc_valores = {}
     global dicc_aux
-    c=0
+    c = 0
     for count, comparaciones in enumerate(comparaciones_full):
         for objetivo, k in comparaciones.items():
             if len(k) > 0:
@@ -361,8 +377,8 @@ def AnalizarA():
                 eje_y = list(map(int, matriz_aux[:, 1]))
                 proteina = str(objetivo[-2:])
                 cepa = str(objetivo[:-2])
-                eje_x0=eje_x[0]
-                cepa_baja=str(eje_x0)
+                eje_x0 = eje_x[0]
+                cepa_baja = str(eje_x0)
                 if cepa == cepa_baja:
                     eje_x0 = eje_x[1]
                 valor = eval(proteina).get(eje_x0)
@@ -372,22 +388,22 @@ def AnalizarA():
                     valor = [cepa]
                 eval(proteina)[eje_x0] = valor
                 # GraficarA(objetivo,eje_x,eje_y, proteina, cepa)
-                dicc_valores[str(count)+cepa_baja+proteina+str(valor[-1])]=c
+                dicc_valores[str(count) + cepa_baja + proteina + str(valor[-1])] = c
                 c += 1
-        AnalizarB(leyendas[count], E1, E2, E7, L1, L2,count,dicc_valores)
+        AnalizarB(leyendas[count], E1, E2, E7, L1, L2, count, dicc_valores)
         E1, E2, E7, L1, L2 = InicializarDiccionarios()
         valor = []
-        #dicc_aux = {}
+        # dicc_aux = {}
+
 
 # Limpiar(archivos_agrupados) # Solo una vez al iniciar y lo dejo xq lo necesita MSA
 # Limpiar(archivos_temp)
 
 
-
 def Main():
     print("1: Obteniendo datos y agrupandolos por riesgo, espere por favor ...")
-    #Limpiar(archivos_agrupados)  # Solo una vez al iniciar y lo dejo xq lo necesita MSA
-    #Limpiar(archivos_agrupados_gen)
+    # Limpiar(archivos_agrupados)  # Solo una vez al iniciar y lo dejo xq lo necesita MSA
+    # Limpiar(archivos_agrupados_gen)
     Limpiar(archivos_temp)
     # Revisar que los archivos no se esten regrabando xq darian error
     AgruparRiesgos()
@@ -397,7 +413,7 @@ def Main():
     # aqui mostar el score
     AnalizarA()
     # aqui agregar menu de detalles incluir un codido id=cont y mostrar datos hsp
-    #Utils.GraficarMatriz2(matriz, lista_cepas, "genoma2")
+    # Utils.GraficarMatriz2(matriz, lista_cepas, "genoma2")
 
 
 def GraficarMatrizProteinas():
@@ -405,15 +421,15 @@ def GraficarMatrizProteinas():
     dicc_proteina_final = {}
     for i in ['E1', 'E2', 'E7', 'L1', 'L2']:
         dicc_temp = {}
-        dicc_temp.update(dicc_proteina[(i,0)])
-        dicc_temp.update(dicc_proteina[(i,1)])
-        dicc_temp.update(dicc_proteina[(i,2)])
-        dicc_proteina_final[i]=dicc_temp
+        dicc_temp.update(dicc_proteina[(i, 0)])
+        dicc_temp.update(dicc_proteina[(i, 1)])
+        dicc_temp.update(dicc_proteina[(i, 2)])
+        dicc_proteina_final[i] = dicc_temp
 
     for clave_m, e in dicc_proteina_final.items():
-        lista_filas=[]
-        lista_columnas=[]
-        matriz2=[]
+        lista_filas = []
+        lista_columnas = []
+        matriz2 = []
         # obtengo el tamaño
         for clave, valor in e.items():
             if clave not in lista_filas:
@@ -426,7 +442,7 @@ def GraficarMatrizProteinas():
         # cargo
         for clave, valor in e.items():
             indice_fila = lista_filas.index(clave)
-            incremento=1
+            incremento = 1
             for i in valor:
                 indice_columna = lista_columnas.index(i)
                 matriz2[indice_fila][indice_columna] += incremento
@@ -435,16 +451,17 @@ def GraficarMatrizProteinas():
         df = pd.DataFrame(data=matriz2, index=lista_filas, columns=lista_columnas)
         sns.set()
         cmap = sns.diverging_palette(0, 230, 90, 60, as_cmap=True)
-        s=sns.heatmap(df, annot=False, cmap='Blues',linewidth=0.3) #, cmap='coolwarm', square=True
+        s = sns.heatmap(df, annot=False, cmap='Blues', linewidth=0.3)  # , cmap='coolwarm', square=True
         plt.yticks(rotation=0, fontsize=9)
         plt.xticks(rotation=0, fontsize=9)
-        titulo="Mejores relaciones por proteina: "+clave_m.upper()
+        titulo = "Mejores relaciones por proteina: " + clave_m.upper()
         s.set(xlabel="Cepas de alto riesgo", title=titulo, ylabel="Cepas HPV")
         plt.gcf().set_size_inches(21, 14)
-        salida = "BD/"+str(clave_m.upper()) + "matriz.jpg"
+        salida = "BD/" + str(clave_m.upper()) + "matriz.jpg"
         plt.savefig(salida)
         plt.show()
         print("Se ha guardado el gráfico en: ", salida)
+
 
 def SubMenu1():
     print()
@@ -467,6 +484,7 @@ def SubMenu1():
     if opcion_principal == 4:
         print("Gracias por utilizar BIOG5")
         sys.exit()
+
 
 def Menu():
     print()

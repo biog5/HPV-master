@@ -3,11 +3,12 @@
 
 # # TP6 Grupo Nº 5
 # Perez Ernesto Rafael rafaelperezctes@gmail.com Sofia Erdozain sofierdozain@gmail.com
-#Created on Wed Nov  3 14:02:59 2021
+# Created on Wed Nov  3 14:02:59 2021
 
-#@author: Grupo Nº 5
+# @author: Grupo Nº 5
 
 import sys
+
 
 def Menu():
     print("#####################################")
@@ -24,38 +25,39 @@ def Menu():
     print("7- Configuar Riesgos")
     print("8- Salir")
     opcion_principal = int(input("Ingrese una opción: "))
-    
-    if opcion_principal  == 1:
+
+    if opcion_principal == 1:
         import Alineamientos
         Alineamientos.Menu()
 
-    if opcion_principal  == 2:
+    if opcion_principal == 2:
         import AlineamientosMSA
         AlineamientosMSA.Menu()
-        
-    if opcion_principal  == 3:
+
+    if opcion_principal == 3:
         import ModelosHMM
         ModelosHMM.Menu()
-    
-    if opcion_principal  == 4:
+
+    if opcion_principal == 4:
         import VariantesProteinas
         VariantesProteinas.Menu()
-        
-    if opcion_principal  == 5:
+
+    if opcion_principal == 5:
         import VariantesGenomas
         VariantesGenomas.Menu()
 
-    if opcion_principal  == 6:
+    if opcion_principal == 6:
         import EstructurasNCBI
         EstructurasNCBI.Menu()
 
-    if opcion_principal  == 7:
+    if opcion_principal == 7:
         import ConfigurarRiesgos
         ConfigurarRiesgos.Menu()
 
-    if opcion_principal  == 8:
+    if opcion_principal == 8:
         print("Gracias por utilizar BIOG5")
         sys.exit()
+
 
 if __name__ == '__main__':
     Menu()
