@@ -6,7 +6,7 @@
 Colaboradores: Aldana Claps aldanaclaps@gmail.com Ana Luz Garcia garcianaluz@gmail.com
 # Análisis de proteinas y genomas de cepas del virus del papiloma humano
 
-El sistema Biog5 para análisis, incia como trabajo final de la materia Bioinformática Avanzada de la UBA. Estamos en la primera etapa del desarrollo, pero se planifica a futuro incluir, múltiples módulos, integrantes de diversas ramas de las ciencias en participación comunitaria para el desarrollo de un suite de herramientas que esperamos sirvan de ayuda para la Investigación y Desarrollo de tratamientos en patologías generaras por el virus del papiloma humano.
+El sistema Biog5 para análisis de cepas del papilomavirus, incia como trabajo final de la materia Bioinformática Avanzada de la UBA. Estamos en la primera etapa del desarrollo, pero se planifica a futuro incluir, múltiples módulos, integrantes de diversas ramas de las ciencias en participación comunitaria para el desarrollo de un suite de herramientas que esperamos sirvan de ayuda para la Investigación y Desarrollo de tratamientos en patologías generaras por el virus del papiloma humano.
 
 # Desarrollo etapas:
 
@@ -138,7 +138,7 @@ Salida gráfica
 
 7- Configurar riesgos
 <pre>
-  7.1 Permite visualizar calsificaciones actuales
+  7.1 Permite visualizar clasificaciones actuales
   
   7.2 Modificar, eliminar, agregar o restaurar nuevas cepas a las Clasificaciones
 
@@ -166,4 +166,4 @@ Salida gráfica
 
 Version 1.4.0
 
-Veanos en nuestro canal de Youtube: @biog5
+Veanos en nuestro canal de Youtube: !["@biog5"](https://www.youtube.com/@biog5)
