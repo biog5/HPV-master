@@ -166,4 +166,4 @@ Salida gráfica
 
 Version 1.4.0
 
-Veanos en nuestro canal de Youtube: !["@biog5"](https://www.youtube.com/@biog5)
+Veanos en nuestro canal de Youtube: [@biog5](https://www.youtube.com/@biog5)
